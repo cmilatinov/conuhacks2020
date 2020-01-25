@@ -36,7 +36,6 @@ export default new Router({
             path: '/authentication',
             name: 'authentication',
             component: Authentication,
-            props: true,
             beforeEnter: ifNotAuthenticated
         },
         {

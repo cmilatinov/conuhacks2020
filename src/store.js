@@ -7,13 +7,15 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: {
-            username: `test`,
-            fname: `raf`,
-            lname: `lmao`
-        },
+        user: null 
+        // {
+        //     username: `test`,
+        //     fname: `raf`,
+        //     lname: `lmao`
+        // }
+        ,
         currAuthStatus: 0,
-        authStatus: [`Idle`, `Authenticating`, `Success`, `Error`],
+        authStatus: [`Logged Out`, `Authenticating`, `Success`, `Error`],
     },
     getters: {
         currentUser(state) {
@@ -44,11 +46,11 @@ export default new Vuex.Store({
         setUsers(state, users) {
             state.users = users;
         },
-    },
-    actions: {
-        
+        loggedOut(state) {
+            state.currAuthStatus = 0;
+            state.user = null;
+        },
     }
 });
-
 
 Vue.prototype.$net = new Network();

@@ -1,7 +1,7 @@
 <template>
     <div id="app">
         <div class="main-container">
-            <navbar :components="options"></navbar>
+            <navbar :components="options" v-if="$store.getters.isAuthenticated" ></navbar>
             <keep-alive>
                 <router-view/>
             </keep-alive>

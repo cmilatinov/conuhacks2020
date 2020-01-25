@@ -9,7 +9,7 @@
                              :key="option + index">
                     <icon class="icon" :icon="option.icon.name"/>
                 </router-link>
-                <icon icon="bell" class="icon" ></icon><b-badge variant="warning">0</b-badge>
+                <icon icon="bell" class="icon" ></icon><b-badge class="badge" variant="warning">0</b-badge>
             </div>
         </div>
     </div>
@@ -60,5 +60,9 @@
 
         background-color: white;
         box-shadow: 0 0 20px -10px black;
+    }
+
+    .badge {
+        
     }
 </style>
