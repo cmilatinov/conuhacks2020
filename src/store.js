@@ -7,7 +7,11 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: null,
+        user: {
+            username: `test`,
+            fname: `raf`,
+            lname: `lmao`
+        },
         currAuthStatus: 0,
         authStatus: [`Idle`, `Authenticating`, `Success`, `Error`],
     },
