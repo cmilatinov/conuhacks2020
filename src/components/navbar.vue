@@ -39,10 +39,10 @@
 
 <style lang="scss" scoped>
     .icon {
-        color: white;
-        opacity: 0.4;
+        color: #424242;
+        opacity: 0.8;
 
-        font-size: 2em;
+        font-size: 1.5em;
         margin: 1%;
 
         cursor: pointer;
@@ -57,5 +57,8 @@
     .top{
         width: 100vw;
         position: absolute;
+
+        background-color: white;
+        box-shadow: 0 0 20px -10px black;
     }
 </style>
