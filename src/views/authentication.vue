@@ -48,8 +48,12 @@
             submitLogin() {
                 this.$net.post(`/users/login`, 
                 this.existingUser).then(res => {
-                    this.$store.commit(`setUser`, res.data);
-                    this.$router.push('/home');
+                    this.$net.get(`/users/${res.data.id}`).then(res => {
+                        this.$store.commit(`setUser`, res.data);
+                        this.$router.push('/home');
+                    }).catch(err => {
+                        this.$swal(`ERROR`, `Unable to login`, `error`);
+                    });
                 }).catch(err => {
                     this.$swal(`ERROR`, `Unable to login`, `error`);
                 })
