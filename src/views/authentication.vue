@@ -2,10 +2,10 @@
     <div class="main-container">
         <div class="login-card" v-if="login">
             <div class="header">Login</div>
-            <b-input class="login-in" v-model="existingUser.username" placeholder="Username" />
+            <b-input class="login-in" v-model="existingUser.email" placeholder="Email" />
             <b-input class="login-in" v-model="existingUser.password" placeholder="Password" type="password" />
 
-            <b-button class="login-in" variant="primary">Login</b-button>
+            <b-button class="login-in" @click="submitLogin" variant="primary">Login</b-button>
             <div class="register-info">Don't have an account yet?</div>
             <b-link class="register-info" @click="login = false">Register here!</b-link>
         </div>
@@ -13,7 +13,6 @@
             <div class="header">Register</div>
             <b-input class="login-in" v-model="newUser.fname" placeholder="First Name"/>
             <b-input class="login-in" v-model="newUser.lname" placeholder="Last Name"/>
-            <b-input class="login-in" v-model="newUser.username" placeholder="Username"/>
             <b-input class="login-in" v-model="newUser.email" placeholder="E-mail"  />
             <b-input class="login-in" v-model="newUser.password" placeholder="Password" type="password" />
 
@@ -32,7 +31,7 @@
                 login: true,
 
                 existingUser: {
-                    username: ``,
+                    email: ``,
                     password: ``,
                 },
 
@@ -40,7 +39,6 @@
                     fname: ``,
                     lname: ``,
                     email: ``,
-                    username: ``,
                     password: ``,
                 }
             }
@@ -50,18 +48,19 @@
             submitLogin() {
                 this.$net.post(`/users/login`, 
                 this.existingUser).then(res => {
-                    console.log(res);
+                    this.$store.commit(`setUser`, res.data);
+                    this.$router.push('/home');
                 }).catch(err => {
-                    console.log(err);
+                    this.$swal(`ERROR`, `Unable to login`, `error`);
                 })
             },
 
             register() {
                 this.$net.post(`/users/register`, this.newUser).then(res => {
-                    console.log(res);
+                    this.$swal(`SUCCESS`, `You have been registered successfully!`, `success`);
                     this.login = true;
                 }).catch(err => {
-                    console.log(err);
+                    this.$swal(`ERROR`, `Unable to register`, `error`);
                 });
             }
         }

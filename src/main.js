@@ -1,6 +1,9 @@
 import Vue from 'vue';
 import App from './app.vue';
 
+import VueSweetalert2 from 'vue-sweetalert2';
+import 'sweetalert2/dist/sweetalert2.min.css';
+
 import { BootstrapVue } from 'bootstrap-vue'
 import 'bootstrap/dist/css/bootstrap.css';
 import 'bootstrap-vue/dist/bootstrap-vue.css';
@@ -19,6 +22,8 @@ library.add(fas)
 Vue.component('icon', FontAwesomeIcon)
 
 Vue.use(BootstrapVue);
+
+Vue.use(VueSweetalert2);
 
 new Vue({
     store,

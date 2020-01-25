@@ -7,13 +7,7 @@ Vue.use(Vuex);
 
 export default new Vuex.Store({
     state: {
-        user: null 
-        // {
-        //     username: `test`,
-        //     fname: `raf`,
-        //     lname: `lmao`
-        // }
-        ,
+        user: null,
         currAuthStatus: 0,
         authStatus: [`Logged Out`, `Authenticating`, `Success`, `Error`],
     },
@@ -43,8 +37,8 @@ export default new Vuex.Store({
         authError(state) {
             state.currAuthStatus = 3;
         },
-        setUsers(state, users) {
-            state.users = users;
+        setUser(state, user) {
+            state.user = user;
         },
         loggedOut(state) {
             state.currAuthStatus = 0;
