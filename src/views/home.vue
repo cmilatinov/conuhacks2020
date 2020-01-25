@@ -1,6 +1,6 @@
 <template>
     <div class="main-container">
-        <div class="container-header"></div>
+        <div class="container-header">Events</div>
         <div class="event-list">
             <event-card>
             </event-card>
@@ -27,7 +27,7 @@
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
     .event-list {
-        padding: 10% 25%;
+        padding: 5% 25% 10% 25%;
     }
 </style>
 

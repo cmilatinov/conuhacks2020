@@ -1,6 +1,7 @@
 <template>
     <div id="app">
         <div class="main-container">
+            <navbar :components="options"></navbar>
             <keep-alive>
                 <router-view/>
             </keep-alive>
@@ -14,7 +15,7 @@
     export default {
         name: 'app',
         components: {
-            NavBar,
+            'navbar': NavBar,
         },
         data() {
             return {
