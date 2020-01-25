@@ -1,6 +1,8 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
 
+import Network from './helpers/network';
+
 Vue.use(Vuex);
 
 export default new Vuex.Store({
@@ -46,4 +48,7 @@ export default new Vuex.Store({
     actions: {
         
     }
-})
+});
+
+
+Vue.prototype.$net = new Network();
