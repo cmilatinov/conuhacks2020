@@ -14,9 +14,9 @@
             </div>
         </div>
         <div class="content">
-            <!-- <keep-alive>
+            <keep-alive>
                 <router-view/>
-            </keep-alive> -->
+            </keep-alive>
         </div>
         <div class="profile" v-if="$store.getters.isAuthenticated">
 
