@@ -46,7 +46,7 @@ export default {
         {
           name: "Analytics",
           icon: "chart-line",
-          route: ""
+          route: "analytics"
         },
         {
           name: "My Events",
@@ -61,7 +61,7 @@ export default {
         {
           name: "Profile",
           icon: "user-tie",
-          route: ""
+          route: "profile"
         }
       ]
     };
@@ -118,53 +118,6 @@ export default {
       }
     }
 
-<<<<<<< HEAD
-    .nav {
-        display: flex;
-        flex-direction: column;
-        align-items: stretch;
-        width: 250px;
-        height: 100%;
-        background-color: #FEFEFE;
-        border-right: 1px solid #E5E7EB;
-        overflow: hidden;
-        
-        .header {
-            display: flex;
-            flex: 0;
-            flex-direction: row;
-            align-items: center;
-            align-self: center;
-            margin: 40px 20px 40px 20px;
-
-            .logo-container {
-                position: relative;
-                width: 70px;
-                height: 70px;
-                border-radius: 15px;
-                background-color: rgba(0,20,50,0.6);
-                margin-right: 20px;
-                
-                .logo {
-                    position: absolute;
-                    width: 100%;
-                    height: 100%;
-                    display: flex;
-                    justify-content: center;
-                    align-items: center;
-                    padding: 10px;
-                    color: #FEFEFE;
-                }
-
-            }
-
-            .title {
-                flex: 1;
-                font-size: 1.4em;
-                font-weight: 600;
-                user-select: none;
-            }
-=======
     .title {
       flex: 1;
       font-size: 1.4em;
@@ -185,7 +138,6 @@ export default {
     &:hover {
       opacity: 0.6;
     }
->>>>>>> ad23c925ece3c3e28e95cb70c5bd316c608ff5bf
 
     &.active {
       opacity: 1;

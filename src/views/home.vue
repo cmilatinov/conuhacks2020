@@ -5,7 +5,7 @@
     <div class="section-header">Upcoming Events</div>
     <div class="event-list">
         <div class="event-container" v-for="event of events" :key="event.id">
-            <event-card @learnMore="learnMore" class="event-card" :eventInfo="event">
+            <event-card variant="info" @learnMore="learnMore" class="event-card" :eventInfo="event">
             </event-card>
         </div>
     </div>
