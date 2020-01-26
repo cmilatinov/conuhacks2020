@@ -24,9 +24,11 @@
 </template>
 
 <script>
+import net from '../helpers/network';
+
 export default {
   activated() {
-        this.$net.get(`/events/${this.id}`).then(res => {
+        net.get(`/events/${this.id}`).then(res => {
             this.event = res.data;
 
             console.log(this.event);
@@ -42,7 +44,7 @@ export default {
 
   methods: {
       signUp(job) {
-          this.$net.post(`/events/signup`, {event_id: this.event.id, job_id: job}).then(res => {
+          net.post(`/events/signup`, {event_id: this.event.id, job_id: job}).then(res => {
 
           }).catch(err => {
 

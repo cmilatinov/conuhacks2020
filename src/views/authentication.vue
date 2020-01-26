@@ -29,6 +29,8 @@
 </template>
 
 <script>
+	import net from '../helpers/network';
+
     export default {
         data() {
             return {
@@ -50,9 +52,9 @@
 
         methods: {
             submitLogin() {
-                this.$net.post(`/users/login`, 
+                net.post(`/users/login`, 
                 this.existingUser).then(res => {
-                    this.$net.get(`/users/${res.data.id}`).then(res => {
+                    net.get(`/users/${res.data.id}`).then(res => {
                         this.$store.commit(`setUser`, res.data);
                         this.$router.push('/home');
                     }).catch(err => {
@@ -64,7 +66,7 @@
             },
 
             register() {
-                this.$net.post(`/users/register`, this.newUser).then(res => {
+                net.post(`/users/register`, this.newUser).then(res => {
                     this.$swal(`SUCCESS`, `You have been registered successfully!`, `success`);
                     this.login = true;
                 }).catch(err => {

@@ -7,6 +7,7 @@ import Authentication from './views/authentication';
 import Event from './views/event';
 import Home from './views/home';
 import Profile from './views/profile';
+import EventCreation from './views/event-creation';
 
 import net from './helpers/network';
 
@@ -14,15 +15,15 @@ Vue.use(Router);
 
 function ifNotAuthenticated(to, from, next) {
     if (!store.getters.isAuthenticated) {
-        return net.get('/current-user').then(res => {
+        return net.get('/users/current').then(res => {
             if(!res.data.error)
                 net.get(`/users/${res.data.id}`).then(res => {
                     store.commit(`setUser`, res.data);
                     next('/home');
-                }).catch(next);
+                }).catch(_ => next());
             else
                 next();
-        }).catch(next);
+        }).catch(_ => next());
     }
     next(`/`);
 }
@@ -68,5 +69,11 @@ export default new Router({
             props: true,
             beforeEnter: ifAuthenticated
         },
+        {
+            path: '/event-creation',
+            name: 'event-creation',
+            component: EventCreation,
+            beforeEnter: ifAuthenticated
+        }
     ]
 });
