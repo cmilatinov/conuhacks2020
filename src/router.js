@@ -55,7 +55,7 @@ export default new Router({
             beforeEnter: ifAuthenticated
         },
         {
-            path: '/event',
+            path: '/event/:id',
             name: 'event',
             component: Event,
             props: true,

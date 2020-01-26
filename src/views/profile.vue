@@ -1,10 +1,9 @@
 <template>
-    <div class="main-container">
+    <div class="main-container" style="height: 100vh;">
         <div class="profile-card">
             <div class="header">Profile</div>
             <b-img class="profile-image"></b-img>
-            <b-form-file class="profile-input" v-model="file2" plain></b-form-file>
-            <b-input disabled="true" class="profile-input" v-model="currUser.email" placeholder="E-mail" />
+            <b-input :disabled="true" class="profile-input" v-model="currUser.email" placeholder="E-mail" />
             <b-input class="profile-input" v-model="currUser.fname" placeholder="First Name" />
             <b-input class="profile-input" v-model="currUser.lname" placeholder="Last Name" />
         </div>

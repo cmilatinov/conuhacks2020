@@ -10,6 +10,7 @@ export default new Vuex.Store({
         user: null,
         currAuthStatus: 0,
         authStatus: [`Logged Out`, `Authenticating`, `Success`, `Error`],
+        lang: `en`
     },
     getters: {
         currentUser(state) {
@@ -22,6 +23,9 @@ export default new Vuex.Store({
         isAuthenticated(state) {
             return !!state.user;
         },
+        language(state) {
+            return state.lang;
+        }
     },
     mutations: {
         startLogin(state) {
@@ -40,10 +44,13 @@ export default new Vuex.Store({
         setUser(state, user) {
             state.user = user;
         },
-        loggedOut(state) {
+        logout(state) {
             state.currAuthStatus = 0;
             state.user = null;
         },
+        setLang(state, lang) {
+            state.lang = lang;
+        }
     }
 });
 
