@@ -8,12 +8,21 @@ import Event from './views/event';
 import Home from './views/home';
 import Profile from './views/profile';
 
+import net from './helpers/network';
+
 Vue.use(Router);
 
 function ifNotAuthenticated(to, from, next) {
     if (!store.getters.isAuthenticated) {
-        next();
-        return;
+        return net.get('/current-user').then(res => {
+            if(!res.data.error)
+                net.get(`/users/${res.data.id}`).then(res => {
+                    store.commit(`setUser`, res.data);
+                    next('/home');
+                }).catch(next);
+            else
+                next();
+        }).catch(next);
     }
     next(`/`);
 }
