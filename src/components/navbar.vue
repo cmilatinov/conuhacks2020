@@ -10,6 +10,7 @@
                     <icon class="icon" :icon="option.icon.name"/>
                 </router-link>
                 <icon icon="bell" class="icon" ></icon><b-badge class="badge" variant="warning">0</b-badge>
+                <icon style="float: right;" icon="sign-out-alt" class="icon" @click="logout"></icon>
             </div>
         </div>
     </div>
@@ -21,7 +22,6 @@
         },
         data() {
             return {
-                lang: 'en',
                 search: '',
             }
         },
@@ -29,7 +29,10 @@
             components: Array,
         },
         methods: {
-            
+            logout() {
+                this.$store.commit('logout');
+                this.$router.push('authentication');
+            }
         },
         watch: {
             
@@ -60,9 +63,5 @@
 
         background-color: white;
         box-shadow: 0 0 20px -10px black;
-    }
-
-    .badge {
-        
     }
 </style>

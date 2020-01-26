@@ -1,14 +1,12 @@
 <template>
-    <div class="main-container">
+    <div class="main-container" style="height: 100vh;">
         <div class="profile-card">
             <chart :data="[]" :options="{}"></chart>
             <div class="header">Profile</div>
             <b-img class="profile-image"></b-img>
-            <b-form-file class="profile-input" v-model="file2" plain></b-form-file>
-            <b-input class="profile-input" v-model="username" placeholder="Username" />
-            <b-input class="profile-input" v-model="email" placeholder="E-mail" />
-            <b-input class="profile-input" v-model="user.fname" placeholder="First Name" />
-            <b-input class="profile-input" v-model="user.lname" placeholder="Last Name" />
+            <b-input :disabled="true" class="profile-input" v-model="currUser.email" placeholder="E-mail" />
+            <b-input class="profile-input" v-model="currUser.fname" placeholder="First Name" />
+            <b-input class="profile-input" v-model="currUser.lname" placeholder="Last Name" />
         </div>
     </div>
 </template>
@@ -28,6 +26,12 @@
                     username: ``,
                     email: ``,
                 }
+            }
+        },
+
+        computed: {
+            currUser() {
+                return this.$store.getters.currentUser;
             }
         }
     };
