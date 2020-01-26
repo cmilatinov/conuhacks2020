@@ -1,20 +1,30 @@
+@import url('https://fonts.googleapis.com/css?family=Raleway&display=swap');
+
 $main-bg-color: #f1f1f1;
 
-.main-container {
-    height: 100vh;
-    width: 100vw;
-    background-color: $main-bg-color;
+html, body {
+    height: 100%;
+    font-family: 'Raleway', sans-serif;
 }
 
-.icon-back {
-    color: #585858;
-    position: absolute;
-    cursor: pointer;
-    font-size: 1.5em;
+#app {
+    height: 100%;
+}
 
-    &:hover {
-        color: #383838;
-    }
+.events {
+    flex: 1;
+}
+
+.profile {
+    width: 30%;
+}
+
+.main-container {
+    height: 100%;
+    width: 100vw;
+    background-color: $main-bg-color;
+
+    display: flex;
 }
 
 .container-header {
@@ -22,7 +32,11 @@ $main-bg-color: #f1f1f1;
     font-weight: 500;
     text-transform: uppercase;
 
-    padding: 8% 0 0 25%;
+    padding: 8% 0 0 15%;
 
     color: #424242;
+}
+
+.profile {
+    background-color: white;
 }
