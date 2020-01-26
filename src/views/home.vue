@@ -50,8 +50,7 @@ export default {
     },
 
     activated() {
-        this.$net
-        .get(`/events/list`)
+        net.get(`/events/list`)
         .then(res => {
             this.events = res.data;
             

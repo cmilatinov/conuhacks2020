@@ -29,6 +29,8 @@
 </template>
 
 <script>
+	import net from '../helpers/network';
+
     export default {
         data() {
             return {
@@ -50,13 +52,12 @@
 
         methods: {
             submitLogin() {
-                this.$net.post(`/users/login`, 
+                net.post(`/users/login`, 
                 this.existingUser).then(res => {
-                    this.$net.get(`/users/${res.data.id}`).then(async res => {
-                        let user = res.data;
+                    net.get(`/users/${res.data.id}`).then(res => {
+						let user = res.data;
                         user.participating = (await this.$net.get(`/users/${user.id}/events`)).data;
-
-                        this.$store.commit(`setUser`, user);
+                        this.$store.commit(`setUser`, res.data);
                         this.$router.push('/home');
                     }).catch(err => {
                         console.log(err);
@@ -68,7 +69,7 @@
             },
 
             register() {
-                this.$net.post(`/users/register`, this.newUser).then(res => {
+                net.post(`/users/register`, this.newUser).then(res => {
                     this.$swal(`SUCCESS`, `You have been registered successfully!`, `success`);
                     this.login = true;
                 }).catch(err => {

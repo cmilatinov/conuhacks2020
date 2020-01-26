@@ -53,5 +53,3 @@ export default new Vuex.Store({
         }
     }
 });
-
-Vue.prototype.$net = new Network();

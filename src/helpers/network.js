@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-export default class Network {
+export class Network {
 
     constructor(url = 'http://localhost:3000'){
         this.axios = axios.create();
@@ -19,3 +19,5 @@ export default class Network {
     }
 
 }
+
+export default new Network();
