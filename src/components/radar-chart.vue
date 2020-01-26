@@ -14,16 +14,17 @@ export default {
         },
         options: {
             type: Object,
-            required: true
-            // scale: {
-            //     angleLines: {
-            //         display: false
-            //     },
-            //     ticks: {
-            //         suggestedMin: 50,
-            //         suggestedMax: 100
-            //     }
-            // }
+            default: {
+                scale: {
+                angleLines: {
+                    display: false
+                },
+                ticks: {
+                    suggestedMin: 50,
+                    suggestedMax: 100
+                }
+            }
+            }
         }
     },
     mounted () {

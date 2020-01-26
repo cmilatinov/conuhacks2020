@@ -91,11 +91,12 @@
 
   box-shadow: 0 0 25px -10px black;
 
-  border-radius: 40px;
+  border-radius: 20px;
 }
 
 .main-container {
   padding: 10% 25%;
+    display: block;
 }
 
 .register-info {

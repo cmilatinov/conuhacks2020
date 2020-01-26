@@ -8,7 +8,7 @@
         </div>
     </div>
     <div class="custom-container profile">
-        <div class="logout">Logout <icon icon="sign-out-alt" class="icon"></icon></div>
+        <div class="logout" @click="logout">Logout <icon icon="sign-out-alt" class="icon"></icon></div>
         <div class="profile-info">
             <icon icon="user" class="user-icon"></icon>
             <div class="content title">Name</div>
@@ -20,20 +20,6 @@
                 :labels="currUser.skills.map(s => s.name)"
                 :datasets="currUser.skills.map(s => s.rating)"
             ></radar-chart>
-
-            <b-button variant="primary" class="create-btn">Create Event</b-button>
-            <div class="header">Your Events</div>
-            <div class="content participating" v-for="e of currUser.participating" :key="e.id">
-                <div class="event-name">
-                    {{e.name[lang]}}
-                </div>
-                <div class="event-status">status: participating</div>
-                <b-progress :value="1" :max="5" class="progress-bar"></b-progress>
-            </div>
-            <div class="content managing" v-for="e of currUser.managing" :key="e.id">
-                <div class="event-name">{{e.name[lang]}}</div>
-                <div>status: managing</div>
-            </div>
         </div>
     </div>
   </div>
@@ -66,6 +52,10 @@ export default {
     methods: {
         getRandomInt () {
             return Math.floor(Math.random() * (50 - 5 + 1)) + 5
+        },
+        logout() {
+            this.$store.commit('logout');
+            this.$router.push('/authentication');
         }
     },
 
@@ -99,6 +89,9 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+.custom-container {
+    overflow: hidden;
+}
 .event-list {
   padding: 5% 15% 10% 15%;
   width: 75vw;
