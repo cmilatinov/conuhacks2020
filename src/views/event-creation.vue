@@ -23,15 +23,20 @@
                     <div class="jobs-info">
                         <div class="form-header" style="font-size: 1.3em">Jobs</div>
 
-                        <b-card v-for="(job, index) of event.jobs" :key="index">
+                        <b-card style="margin-top: 15px;" v-for="(job, index) of event.jobs" :key="index">
                             <div class="form-header">Title</div>
                             <b-input v-model="job.title[lang]" />
                             <div class="form-header">Description</div>
                             <b-input v-model="job.description[lang]" />
-                            <div>{{job}}</div>
+                            <div class="form-header">Skills</div>
+                            <multiselect :multiple="true" v-model="job.skills" :options="skills" :custom-label="({name}) => name ? name[lang] : name">
+                            </multiselect>
+                            <div class="form-header">Tasks</div>
+                            <div class="form-info">Write the tasks separated by a comma.</div>
+                            <b-input v-model="job.tasks" placeholder="i.e. cooking, washing dishes, etc"/>
                         </b-card>
 
-                        <b-button class="new-job-btn" pill @click="createNewJob" variant="primary">Create New Job</b-button>
+                        <b-button style="width: 100%;" class="new-job-btn" pill @click="createNewJob" variant="primary">Create New Job</b-button>
                     </div>
                 </div>
             </div>
@@ -46,15 +51,87 @@
 
 <script>
 import DatePicker from 'vue2-datepicker';
+import net from '../helpers/network';
+import Multiselect from 'vue-multiselect';
 
 export default {
+    activated() {
+        net.get("/skills/list").then(res => {
+            this.skills = res.data;
+        }).catch(err => {console.log(err);
+        });
+    },
+
     components: {
-        'date-picker': DatePicker
+        'date-picker': DatePicker,
+        'multiselect': Multiselect
     },
 
     methods: {
         updatePhase() {
-            this.currPhase ++;
+            if(this.currPhase === 0) {
+                
+                if(this.phaseOneFinished()) 
+                    this.currPhase ++;
+                else 
+                    this.$swal('ERROR', 'Make sure you fill out all the fields', 'error');
+                return;
+            }
+
+            if(this.currPhase === 1 && this.phaseTwoFinished()) {
+                let event = {... this.event};
+                for(let j of this.event.jobs) {
+                    j.tasks = j.tasks.split(',');
+                    for(let t in j.tasks) {
+                        j.tasks[t] = {name: {
+                            en: j.tasks[t],
+                            fr: ''
+                        }, order: 0}
+                    }
+
+                    j.skills = j.skills.map(s => s.id);
+                }
+
+                event.admins = [this.currUser.id];
+
+                net.post('/events/create', event).then(res => {
+                    this.$swal('SUCCESS', 'Successfully created the event', 'success');
+                }).catch(err => {
+                    this.$swal('ERROR', 'Unable to create event.', 'error');
+                })
+            } else {
+                this.$swal('ERROR', 'Make sure you fill out all the fields', 'error');
+            }
+        },
+
+        phaseOneFinished() {
+            return this.event.name.en !== `` && this.event.description.en !== `` && this.event.start !== null && this.event.end !== null;
+        },
+
+        phaseTwoFinished() {
+            if(this.event.jobs.length === 0)
+                return false;
+            else {
+                for(let j of this.event.jobs) {
+                    if(j.title.en === '' && j.title.fr === '') {
+                        return false
+                    }
+
+                    if(j.description.en === '' && j.description.fr === '') {
+                        return false
+                    }
+
+                    if(j.skills.length === 0) { 
+                        return false
+                    }
+
+                    if(j.tasks === '') {
+                        return false
+                    }
+                }
+
+                return true;
+            }
         },
 
         goBack() {
@@ -74,7 +151,7 @@ export default {
                         en:'',
                         fr: ''
                     },
-                    tasks: [],
+                    tasks: '',
                     skills: []
                 }
             );
@@ -83,6 +160,7 @@ export default {
 
     data() {
         return {
+            skills: [],
             currPhase: 0,
             event: {
                 name: {
@@ -101,14 +179,15 @@ export default {
             hideFirst: false,
         }
     },
-
-    computed: {
-        firstPhase() {
-            return this.event.name.en !== `` && this.event.description.en !== `` && this.event.start !== null && this.event.end !== null;
+     computed: {
+        currUser() {
+            return this.$store.getters.currentUser;
         }
     }
 }
 </script>
+
+<style src="vue-multiselect/dist/vue-multiselect.min.css"></style>
 
 <style lang="scss" scoped>
 
