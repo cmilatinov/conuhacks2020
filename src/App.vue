@@ -40,7 +40,7 @@
                     {
                         name: 'Analytics',
                         icon: 'chart-line',
-                        route: ''
+                        route: 'analytics'
                     },
                     {
                         name: 'My Events',

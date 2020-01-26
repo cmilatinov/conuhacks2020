@@ -8,6 +8,7 @@ import Event from './views/event';
 import Home from './views/home';
 import Profile from './views/profile';
 import EventCreation from './views/event-creation';
+import Analytics from './views/analytics';
 
 import net from './helpers/network';
 
@@ -74,6 +75,13 @@ export default new Router({
             name: 'event-creation',
             component: EventCreation,
             beforeEnter: ifAuthenticated
-        }
+        },
+        {
+            path: '/analytics',
+            name: 'analytics',
+            component: Analytics,
+            props: true,
+            beforeEnter: ifAuthenticated
+        },
     ]
 });
