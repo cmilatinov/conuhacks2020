@@ -55,7 +55,7 @@
                     {
                         name: 'Profile',
                         icon: 'user-tie',
-                        route: ''
+                        route: 'profile'
                     }
                 ],
             }
