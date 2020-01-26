@@ -56,7 +56,7 @@
                 this.existingUser).then(res => {
                     net.get(`/users/${res.data.id}`).then(async res => {
 						let user = res.data;
-                        user.participating = (await this.$net.get(`/users/${user.id}/events`)).data;
+                        user.participating = (await net.get(`/users/${user.id}/events`)).data;
                         this.$store.commit(`setUser`, res.data);
                         this.$router.push('/home');
                     }).catch(err => {
