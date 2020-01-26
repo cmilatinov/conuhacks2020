@@ -21,21 +21,23 @@
         <div class="hint"><span class="hint-pad"><strong>{{nbEvents}}</strong> recently posted events</span> <strong>{{nbUsers}}</strong> active users</div>
     </div>
 
-    <b-modal id="deleteConfirm"
-            title="Event Information"
+    <b-modal title="Event Information"
             v-model="showEvent">
         <b-container fluid v-if="currEvent !== null">
-            <div class="header">{{currEvent.name[lang]}}</div>
-            <div class="content">{{currEvent.remainingTime}}</div>
-            <div class="content">{{currEvent.description[lang]}}</div>
+            <div class="modal-hdr">{{currEvent.name[lang]}}</div>
+            <div class="modal-timer">{{currEvent.remainingTime}}</div>
+            <div class="modal-cntent">{{currEvent.description[lang]}}</div>
 
-            <div class="header">Jobs</div>
+            <div style="margin-top: 2%;" class="modal-hdr">Jobs</div>
             <div v-for="job of currEvent.jobs" :key="job.id" class="job-container">
                 <div class="job-title">
                     {{job.title[lang]}}
                 </div>
-                <div class="job-skills">Skills: {{job.skills.map(s => s.name[lang]).join(', ')}}</div>
-                <div class="job-tasks">Tasks: {{job.tasks.map(t => t.name[lang]).join(', ')}}</div>
+                <div class="modal-sub-hdr">Skills</div>
+                <div class="modal-sub-cntent">{{job.skills.map(s => s.name[lang]).join(', ')}}</div>
+                <div class="modal-sub-hdr">Tasks</div>
+                <div class="modal-sub-cntent">{{job.tasks.map(s => s.name[lang]).join(', ')}}</div>
+                <b-button class="modal-btn" variant="primary" @click="signUp(job.id)">Sign Up</b-button>
             </div>
         </b-container>
         <div slot="modal-footer">
@@ -100,6 +102,13 @@ export default {
             let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
             let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
           return `Days ${days}, Hours ${hours}, Minutes ${minutes}`;
+      },
+      signUp(job_id) {
+          net.post('/events/signup', {user_id: this.currUser.id, event_id: this.currEvent.id, job_id: job_id}).then(res => {
+              this.$swal('SUCCESS', `You have signed up for ${this.currEvent.name.en}`, `success`);
+          }).catch(err => {
+              this.$swal('ERROR', `There was an error while signing you up`, 'error');
+          });
       }
     },
 
@@ -225,6 +234,38 @@ export default {
 
 .hint-pad{
     padding-right: 20px;
+}
+
+.modal-hdr {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+}
+
+.modal-timer {
+    margin-bottom: 1.5%;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.modal-cntent {
+    margin-top: 3%;
+}
+
+.modal-sub-hdr {
+    font-weight: 500;
+}
+
+.job-title {
+    margin-top: 2%;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.modal-btn {
+    size: small;
+    margin: 3% 0;
 }
 </style>
 

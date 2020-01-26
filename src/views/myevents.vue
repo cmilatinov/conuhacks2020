@@ -3,13 +3,13 @@
     <div class="section-header">Currently Enrolled Events</div>
     <div class="event-list">
       <div class="event-container" v-for="event of events" :key="event.id">
-        <event-card class="event-card" :eventInfo="event"></event-card>
+        <event-card @learnMore="learnMore" class="event-card" :eventInfo="event"></event-card>
       </div>
     </div>
     <div class="section-header">Your Created Events (Admin)</div>
     <div class="event-list">
       <div class="event-container" v-for="allEvent of allEvents" :key="allEvent.id">
-        <event-card class="event-card" :eventInfo="allEvent" variant="danger" altText="Edit"></event-card>
+        <event-card @learnMore="learnMore" class="event-card" :eventInfo="allEvent" variant="danger" altText="Edit"></event-card>
       </div>
     </div>
     <div class="profile-info">
@@ -104,7 +104,19 @@ export default {
       );
       let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
       return `Days ${days}, Hours ${hours}, Minutes ${minutes}`;
-    }
+    },
+    learnMore(id) {
+        net.get(`/events/${id}`).then(res => {
+            this.currEvent = res.data;
+
+            this.currEvent.start = new Date(this.currEvent.start);
+            this.currEvent.end = new Date(this.currEvent.end);
+            this.currEvent.remainingTime = this.getRemainingTime();
+            this.showEvent = true;
+        }).catch(err => {
+            console.log(err);
+        });
+    },
   },
 
   data() {
@@ -207,6 +219,38 @@ export default {
       color: #fefefe;
     }
   }
+}
+
+.modal-hdr {
+    font-weight: 500;
+    text-transform: uppercase;
+    font-size: 1.1em;
+    letter-spacing: 2px;
+}
+
+.modal-timer {
+    margin-bottom: 1.5%;
+    font-size: 0.8em;
+    opacity: 0.7;
+}
+
+.modal-cntent {
+    margin-top: 3%;
+}
+
+.modal-sub-hdr {
+    font-weight: 500;
+}
+
+.job-title {
+    margin-top: 2%;
+    text-decoration: underline;
+    font-weight: 500;
+}
+
+.modal-btn {
+    size: small;
+    margin: 3% 0;
 }
 </style>
 
