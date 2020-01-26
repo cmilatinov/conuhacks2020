@@ -12,7 +12,7 @@
 </template>
 
 <script>
-    import Chart from '../components/chart';
+    import Chart from '../components/radar-chart';
     export default {
         components: {
             'chart': Chart
