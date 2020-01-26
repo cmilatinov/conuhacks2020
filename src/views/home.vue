@@ -16,9 +16,13 @@
             <div class="content title">Email</div>
             <div class="content">{{currUser.email}}</div>
             
-            <radar-chart 
-                :labels="currUser.skills.map(s => s.name)"
-                :datasets="currUser.skills.map(s => s.rating)"
+            <radar-chart
+                :labels="currUser.skills.map(s => s.name[lang])"
+                :datasets="[{
+                    label: 'Skills',
+                    backgroundColor: '#e06750',
+                    data: currUser.skills.map(s => s.rating)
+                    }]"
                 :options="{             
                     scale: {
                         angleLines: {
@@ -74,20 +78,6 @@ export default {
     data() {
         return {
             events: [],
-            datacollection: {
-                labels: [this.getRandomInt(), this.getRandomInt()],
-                datasets: [
-                    {
-                    label: 'Data One',
-                    backgroundColor: '#f87979',
-                    data: [this.getRandomInt(), this.getRandomInt()]
-                    }, {
-                    label: 'Data One',
-                    backgroundColor: '#f87979',
-                    data: [this.getRandomInt(), this.getRandomInt()]
-                    }
-                ]
-            }
         }
     },
 
