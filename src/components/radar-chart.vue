@@ -20,8 +20,8 @@ export default {
             //         display: false
             //     },
             //     ticks: {
-            //         suggestedMin: 50,
-            //         suggestedMax: 100
+            //         suggestedMin: 0,
+            //         suggestedMax: 5
             //     }
             // }
         }
