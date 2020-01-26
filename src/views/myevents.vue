@@ -9,7 +9,7 @@
     <div class="section-header">Your Created Events (Admin)</div>
     <div class="event-list">
       <div class="event-container" v-for="allEvent of allEvents" :key="allEvent.id">
-        <event-card @learnMore="learnMore" class="event-card" :eventInfo="allEvent" variant="danger" altText="Edit"></event-card>
+        <event-card @learnMore="editEvent" class="event-card" :eventInfo="allEvent" variant="danger" altText="Edit"></event-card>
       </div>
     </div>
     <div class="profile-info">
@@ -26,14 +26,35 @@
         <div class="content">{{currEvent.description[lang]}}</div>
 
         <div class="header">Jobs</div>
-        <div v-for="job of currEvent.jobs" :key="job.id" class="job-container">
+        <div v-for="job of currEvent.jobs.filter(j => userJobs.find(jj => jj.event_id === currEvent.id && jj.job_id === j.id))" :key="job.id" class="job-container">
           <div class="job-title">{{job.title[lang]}}</div>
           <div class="job-skills">Skills: {{job.skills.map(s => s.name[lang]).join(', ')}}</div>
           <div class="job-tasks">Tasks: {{job.tasks.map(t => t.name[lang]).join(', ')}}</div>
+
+          <b-button class="modal-btn" variant="primary" @click="taskCompleted">Job Completed</b-button>
         </div>
       </b-container>
       <div slot="modal-footer">
         <b-button variant="danger" style="margin-right: 10px;" @click="showEvent = false">Close</b-button>
+      </div>
+    </b-modal>
+
+    <b-modal id="deleteConfirm" title="Event Information" v-model="showEdit">
+      <b-container fluid v-if="currEvent !== null">
+        <div class="modal-hdr" style="margin-top: 5%;">Name</div>
+        <b-input class="form-input" v-model="currEvent.name[lang]"/>
+
+        <div class="modal-hdr" style="margin-top: 5% 0 1% 0;">Description</div>
+        <b-textarea class="form-input" v-model="currEvent.description[lang]"/>
+
+        <div class="modal-hdr" style="margin-top: 5% 0 1% 0;">Start Date</div>
+        <b-input class="form-input" v-model="currEvent.start" type="date"/>
+
+        <div class="modal-hdr" style="margin-top: 5% 0 1% 0;">End Date</div>
+        <b-input class="form-input" v-model="currEvent.end" type="date"/>
+      </b-container>
+      <div slot="modal-footer">
+        <b-button variant="danger" style="margin-right: 10px;" @click="showEdit = false">Close</b-button>
       </div>
     </b-modal>
   </div>
@@ -51,6 +72,14 @@ export default {
   },
 
   activated() {
+    net.get(`/users/${this.currUser.id}/job`).then(res => {
+      this.userJobs = res.data;
+      console.log(this.userJobs);
+    }).catch(err => {
+      console.log(err);
+    })
+
+
     net
       .get(`/users/${this.currUser.id}/events`)
       .then(res => {
@@ -74,6 +103,10 @@ export default {
   },
 
   methods: {
+    taskCompleted() {
+      this.events.splice(this.events.indexOf(this.currEvent), 1);
+      this.showEvent = false;
+    },
     getRandomInt() {
       return Math.floor(Math.random() * (50 - 5 + 1)) + 5;
     },
@@ -96,6 +129,23 @@ export default {
           console.log(err);
         });
     },
+
+    editEvent(id) {
+      net
+        .get(`/events/${id}`)
+        .then(res => {
+          this.currEvent = res.data;
+
+          this.currEvent.start = new Date(this.currEvent.start);
+          this.currEvent.end = new Date(this.currEvent.end);
+          this.currEvent.remainingTime = this.getRemainingTime();
+          this.showEdit = true;
+        })
+        .catch(err => {
+          console.log(err);
+        });
+    },
+
     getRemainingTime() {
       let difference = this.currEvent.start - new Date().getTime();
       let days = Math.floor(difference / (1000 * 60 * 60 * 24));
@@ -124,7 +174,9 @@ export default {
       events: [],
       allEvents: [],
       currEvent: null,
-      showEvent: false
+      showEvent: false,
+      showEdit: false,
+      userJobs: [],
     };
   },
 
@@ -251,6 +303,7 @@ export default {
 .modal-btn {
     size: small;
     margin: 3% 0;
+    width: 100%;
 }
 </style>
 

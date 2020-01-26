@@ -4,12 +4,20 @@
             <div class="header">Profile</div>
             <b-img class="profile-image"></b-img>
             <div class="form-header">Email</div>
-            <b-input :disabled="true" class="profile-input" v-model="currUser.email" placeholder="E-mail" />
-            <div class="form-header">First Name</div>
-            <b-input class="profile-input" v-model="currUser.fname" placeholder="First Name" />
-            <div class="form-header">Last Name</div>
-            <b-input class="profile-input" v-model="currUser.lname" placeholder="Last Name" />
-            <div class="form-header">Skills</div>
+            <div class="form-content">{{currUser.email}}</div>
+
+            <div class="name">
+                <div class="fname">
+                    <div class="form-header">First Name</div>
+                    <div class="form-content">{{currUser.fname}}</div>
+                </div>
+                <div class="lname">
+                    <div class="form-header">Last Name</div>
+                    <div class="form-content">{{currUser.lname}}</div>    
+                </div>
+
+            </div>
+            <div class="form-header">Skills Overview</div>
             <div class="radar">
                 <radar-chart
                     :labels="currUser.skills.map(s => s.name[lang])"
@@ -57,7 +65,7 @@
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped>
+<style lang="scss" scoped>
     .profile-input {
         margin: 20px 0;
     }
@@ -91,7 +99,21 @@
 
     .radar{
         display: flex;
-        padding-left: 20%;
+        justify-content: center;
+        align-items: center;
+        padding-top: 3%;
+    }
+
+    .form-content {
+        margin-bottom: 2%;
+    }
+
+    .name {
+        display: flex;
+
+        .fname, .lname {
+            flex: 1;
+        }
     }
 </style>
 
