@@ -1,42 +1,27 @@
 <template>
   <div class="main-container">
-    <div class="custom-container events">
-        <div class="container-header">Hey {{currUser.fname}}, Welcome Back to Vault!</div>
-        <div class="event-list">
-            <event-card :eventInfo="event" v-for="event of events" :key="event.id">
+        
+    <div class="container-header">Hello {{currUser.fname}}, Welcome Back!</div>
+    <div class="section-header">Upcoming Events</div>
+    <div class="event-list">
+        <div class="event-container" v-for="event of events" :key="event.id">
+            <event-card class="event-card" :eventInfo="event">
             </event-card>
         </div>
     </div>
-    <div class="custom-container profile">
-        <div class="logout" @click="logout">Logout <icon icon="sign-out-alt" class="icon"></icon></div>
-        <div class="profile-info">
-            <icon icon="user" class="user-icon"></icon>
-            <div class="content title">Name</div>
-            <div class="content">{{currUser.fname}} {{currUser.lname}}</div>
-            <div class="content title">Email</div>
-            <div class="content">{{currUser.email}}</div>
-            
-            <radar-chart
-                :labels="currUser.skills.map(s => s.name[lang])"
-                :datasets="[{
-                    label: 'Skills',
-                    backgroundColor: '#e06750',
-                    data: currUser.skills.map(s => s.rating)
-                    }]"
-                :options="{             
-                    scale: {
-                        angleLines: {
-                            display: false
-                        },
-                        ticks: {
-                            suggestedMin: 0,
-                            suggestedMax: 5
-                        }
-                    }
-                }"
-            ></radar-chart>
+
+    <div class="profile-info">
+        <div class="name">{{currUser.fname}} {{currUser.lname}}</div>
+        <div class="icon-container">
+            <icon class="profile-icon" icon="user-alt"></icon>
         </div>
     </div>
+
+    <div class="hint-row">
+        <div class="hint"><strong>{{nbEvents}}</strong> recently posted events</div>
+        <div class="hint"><strong>{{nbUsers}}</strong> active users</div>
+    </div>
+
   </div>
 </template>
 
@@ -78,6 +63,8 @@ export default {
     data() {
         return {
             events: [],
+            nbUsers: Math.floor(Math.random() * 20000),
+            nbEvents: Math.floor(Math.random() * 1000)
         }
     },
 
@@ -91,90 +78,103 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
-.custom-container {
-    overflow: hidden;
+.main-container {
+    position: relative;
+    width: 100%;
+    height: 100%;
+    overflow-y: auto;
+    padding: 3%;
 }
+
 .event-list {
-  padding: 5% 15% 10% 15%;
-  width: 75vw;
-  height: 100%;
-  overflow-y: auto;
+    display: flex;
+    flex-direction: row;
+    flex-wrap: wrap;
 }
 
-.icon {
-    position: absolute; 
-    right: 1.5%;
+.event-container {
+    width: 33%;
+    padding: 2%;
 }
 
-.user-icon {
-    text-align: center;
+.container-header {
+    font-weight: 600;
+    font-size: 1.5em;
     width: 100%;
-    font-size: 6em;
-    margin-bottom: 10%;
+    text-align: center;
 
-    border-radius: 25px;
+    margin: 2% 0;
 }
 
-.content {
+.section-header {
     font-weight: 400;
-    margin: 0 6% 3% 6%;
-}
-
-.logout {
-    font-weight: 600;
+    font-size: 1.1em;
     width: 100%;
-    margin: 5% 5% 10% 5%;
+    text-align: left;
 
-    cursor: pointer;
-}
-
-.header {
-    font-weight: 600;
-    font-size: 1.2em;
-    width: 100%;
-    text-align: center;
-
-    margin: 5% 0;
-}
-
-.event-card {
-    margin: 0 0 6% 0;
+    margin: 1% 3%;
 }
 
 .profile-info {
-    overflow-y: auto;
+    position: fixed;
+    opacity: 0.6;
+    bottom: 0;
+    right: 0;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    margin: 20px 35px;
+    cursor: pointer;
+
+    .name {
+        font-size: 0.9em;
+        font-weight: 600;
+        opacity: 0;
+        transition: 0.2s;
+        transform: translateX(15%);
+    }
+
+    &:hover > .name {
+        transform: none;
+        opacity: 1;
+    }
+
+    .icon-container {
+        position: relative;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        width: 50px;
+        height: 50px;
+        border-radius: 50px;
+        margin-left: 10px;
+        border: 1px solid rgba(0, 0, 0, 0.3);
+        font-size: 1.2em;
+        color: rgba(0, 0, 0, 0.3);
+        transition: 0.2s;
+
+        &:hover {
+            background-color: rgb(40, 40, 40);
+            border: none;
+            color: #FEFEFE;
+        }
+    }
 }
 
-.participating {
-    background-color: #99cccc;
-    font-weight: 700;
-    color: #0e1d1d;
-    border-radius: 15px;
-    padding: 5%;
-    font-size: 1.2em;
+.hint-row {
+    position: absolute;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    bottom: 0;
+    left: 0;
+    margin: 20px;
+    font-size: 0.8em;
+    opacity: 0.7;
 
-    text-align: left;
-}
-
-.event-status {
-    font-weight: 500;
-    font-size: 0.9em;
-}
-
-.managing {
-    background-color: #FF6961;
-    color: white;
-
-}
-
-.title {
-    font-weight: 700;
-    text-align: left;
-}
-
-.create-btn {
-    width: 88%;
-    margin: 3% 6% 3% 6%;
+    .hint {
+        margin-right: 20px;
+    }
 }
 </style>
 

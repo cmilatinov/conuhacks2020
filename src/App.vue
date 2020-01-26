@@ -14,12 +14,9 @@
             </div>
         </div>
         <div class="content">
-            <!-- <keep-alive>
+            <keep-alive>
                 <router-view/>
-            </keep-alive> -->
-        </div>
-        <div class="profile" v-if="$store.getters.isAuthenticated">
-
+            </keep-alive>
         </div>
     </div>
 </template>
@@ -41,10 +38,25 @@
                         route: 'home'
                     },
                     {
-                        name: 'Event Creation',
-                        icon: 'pencil-alt',
+                        name: 'Analytics',
+                        icon: 'chart-line',
+                        route: ''
+                    },
+                    {
+                        name: 'My Events',
+                        icon: 'calendar-check',
+                        route: ''
+                    },
+                    {
+                        name: 'Host an Event',
+                        icon: 'calendar-day',
                         route: 'event-creation'
                     },
+                    {
+                        name: 'Profile',
+                        icon: 'user-tie',
+                        route: ''
+                    }
                 ],
             }
         },
