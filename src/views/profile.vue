@@ -1,6 +1,7 @@
 <template>
     <div class="main-container">
         <div class="profile-card">
+            <chart :data="[]" :options="{}"></chart>
             <div class="header">Profile</div>
             <b-img class="profile-image"></b-img>
             <b-form-file class="profile-input" v-model="file2" plain></b-form-file>
@@ -13,9 +14,10 @@
 </template>
 
 <script>
-
+    import Chart from '../components/chart';
     export default {
         components: {
+            'chart': Chart
         },
 
         data() {
