@@ -15,13 +15,20 @@
             <div class="content">{{currUser.fname}} {{currUser.lname}}</div>
             <div class="content title">Email</div>
             <div class="content">{{currUser.email}}</div>
+            
+            <radar-chart 
+                :labels="currUser.skills.map(s => s.name)"
+                :datasets="currUser.skills.map(s => s.rating)"
+            ></radar-chart>
 
+            <b-button variant="primary" class="create-btn">Create Event</b-button>
             <div class="header">Your Events</div>
             <div class="content participating" v-for="e of currUser.participating" :key="e.id">
                 <div class="event-name">
                     {{e.name[lang]}}
                 </div>
                 <div class="event-status">status: participating</div>
+                <b-progress :value="1" :max="5" class="progress-bar"></b-progress>
             </div>
             <div class="content managing" v-for="e of currUser.managing" :key="e.id">
                 <div class="event-name">{{e.name[lang]}}</div>
@@ -34,10 +41,12 @@
 
 <script>
 import EventCard from "../components/event-card";
+import RadarChart from "../components/radar-chart";
 
 export default {
     components: {
         "event-card": EventCard,
+        "radar-chart": RadarChart,
     },
 
     activated() {
@@ -165,6 +174,11 @@ export default {
 .title {
     font-weight: 700;
     text-align: left;
+}
+
+.create-btn {
+    width: 88%;
+    margin: 3% 6% 3% 6%;
 }
 </style>
 
