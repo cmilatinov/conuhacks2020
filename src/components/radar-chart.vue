@@ -14,6 +14,7 @@ export default {
         },
         options: {
             type: Object,
+<<<<<<< HEAD
             default: {
                 scale: {
                 angleLines: {
@@ -25,6 +26,18 @@ export default {
                 }
             }
             }
+=======
+            required: true
+            // scale: {
+            //     angleLines: {
+            //         display: false
+            //     },
+            //     ticks: {
+            //         suggestedMin: 0,
+            //         suggestedMax: 5
+            //     }
+            // }
+>>>>>>> fba99789c32ad992ef943d618e92b2ac82921044
         }
     },
     mounted () {
