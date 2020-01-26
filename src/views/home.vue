@@ -1,7 +1,7 @@
 <template>
   <div class="main-container">
     <div class="custom-container events">
-        <div class="container-header">All Events</div>
+        <div class="container-header">Hey {{currUser.fname}}, Welcome Back to Vault!</div>
         <div class="event-list">
             <event-card :eventInfo="event" v-for="event of events" :key="event.id">
             </event-card>
@@ -39,6 +39,7 @@
 <script>
 import EventCard from "../components/event-card";
 import RadarChart from "../components/radar-chart";
+import net from '../helpers/network';
 
 export default {
     components: {
@@ -106,6 +107,8 @@ export default {
 .event-list {
   padding: 5% 15% 10% 15%;
   width: 75vw;
+  height: 100%;
+  overflow-y: auto;
 }
 
 .icon {
