@@ -30,7 +30,6 @@
                             }
                         }"
                 ></radar-chart>
-                <!-- <radar-chart></radar-chart> -->
             </div>
         </div>
     </div>
@@ -66,9 +65,7 @@
     .profile-card {
         background-color: white;
         padding: 5%;
-
         box-shadow: 0 0 25px -10px black;
-
         border-radius: 40px;
     }
 
@@ -78,6 +75,10 @@
 
     .main-container {
         padding: 5%;
+        position: relative;
+        width: 100%;
+        height: 100%;
+        overflow-y: auto;
     }
 
     .header {
@@ -90,8 +91,7 @@
 
     .radar{
         display: flex;
-        align-items: center;
-        justify-content: center;
+        padding-left: 20%;
     }
 </style>
 

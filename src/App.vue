@@ -5,7 +5,7 @@
                 <div class="logo-container">
                     <icon icon="hands-helping" class="logo"/>
                 </div>
-                <div class="title">Vault</div>
+                <div class="title" unselectable="on">Vault</div>
             </div>
 
             <div class="nav-item" :class="{ active: $route.name === option.route }" :key="option.name" v-for="option in options" @click="_ => $router.push(option.route)">
@@ -117,6 +117,7 @@
                 flex: 1;
                 font-size: 1.4em;
                 font-weight: 600;
+                user-select: none;
             }
 
         }
