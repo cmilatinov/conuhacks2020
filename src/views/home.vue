@@ -19,6 +19,17 @@
             <radar-chart 
                 :labels="currUser.skills.map(s => s.name)"
                 :datasets="currUser.skills.map(s => s.rating)"
+                :options="{             
+                    scale: {
+                        angleLines: {
+                            display: false
+                        },
+                        ticks: {
+                            suggestedMin: 0,
+                            suggestedMax: 5
+                        }
+                    }
+                }"
             ></radar-chart>
         </div>
     </div>
