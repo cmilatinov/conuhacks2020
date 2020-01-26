@@ -21,7 +21,8 @@
         },
         methods: {
             learnMore() {
-                this.$router.push(`/event/${this.eventInfo.id}`);
+                this.$emit('learnMore', this.eventInfo.id);
+                // this.$router.push(`/event/${this.eventInfo.id}`);
             }
         },
         mixins: [globalMixin]

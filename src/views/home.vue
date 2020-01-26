@@ -22,6 +22,31 @@
         <div class="hint"><strong>{{nbUsers}}</strong> active users</div>
     </div>
 
+    <b-modal id="deleteConfirm"
+            title="Event Information"
+            v-model="showEvent">
+        <b-container fluid v-if="currEvent !== null">
+            <div class="header">{{currEvent.name[lang]}}</div>
+            <div class="content">{{currEvent.remainingTime}}</div>
+            <div class="content">{{currEvent.description[lang]}}</div>
+
+            <div class="header">Jobs</div>
+            <div v-for="job of currEvent.jobs" :key="job.id" class="job-container">
+                <div class="job-title">
+                    {{job.title[lang]}}
+                </div>
+                <div class="job-skills">Skills: {{job.skills.map(s => s.name[lang]).join(', ')}}</div>
+                <div class="job-tasks">Tasks: {{job.tasks.map(t => t.name[lang]).join(', ')}}</div>
+            </div>
+        </b-container>
+        <div slot="modal-footer">
+            <b-button variant="danger" style="margin-right: 10px;"
+                    @click="showEvent = false">
+                Close
+            </b-button>
+        </div>
+    </b-modal>
+
   </div>
 </template>
 
@@ -57,14 +82,35 @@ export default {
         logout() {
             this.$store.commit('logout');
             this.$router.push('/authentication');
-        }
+        },
+        learnMore(id) {
+            net.get(`/events/${id}`).then(res => {
+                this.currEvent = res.data;
+
+                this.currEvent.start = new Date(this.currEvent.start);
+                this.currEvent.end = new Date(this.currEvent.end);
+                this.currEvent.remainingTime = this.getRemainingTime();
+                this.showEvent = true;
+            }).catch(err => {
+                console.log(err);
+            });
+        },
+        getRemainingTime() {
+          let difference =  this.currEvent.start - new Date().getTime();
+          let days = Math.floor(difference / (1000 * 60 * 60 * 24));
+            let hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+            let minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+          return `Days ${days}, Hours ${hours}, Minutes ${minutes}`;
+      }
     },
 
     data() {
         return {
             events: [],
             nbUsers: Math.floor(Math.random() * 20000),
-            nbEvents: Math.floor(Math.random() * 1000)
+            nbEvents: Math.floor(Math.random() * 1000),
+            currEvent: null,
+            showEvent: false,
         }
     },
 

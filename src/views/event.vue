@@ -1,5 +1,5 @@
 <template>
-  <div class="main-container body">
+  <div class="main-container">
       <div class="container-header">
           Event Description
       </div>
@@ -83,10 +83,6 @@ export default {
         box-shadow: 0 0 25px -10px black;
 
         border-radius: 40px;
-    }
-
-    .main-container {
-        padding: 7% 10% 10% 10%;
     }
 
     .header {
