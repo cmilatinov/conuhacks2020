@@ -55,9 +55,12 @@
                 net.post(`/users/login`, 
                 this.existingUser).then(res => {
                     net.get(`/users/${res.data.id}`).then(res => {
+						let user = res.data;
+                        user.participating = (await this.$net.get(`/users/${user.id}/events`)).data;
                         this.$store.commit(`setUser`, res.data);
                         this.$router.push('/home');
                     }).catch(err => {
+                        console.log(err);
                         this.$swal(`ERROR`, `Unable to login`, `error`);
                     });
                 }).catch(err => {
