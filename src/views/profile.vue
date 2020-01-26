@@ -73,8 +73,9 @@
     .profile-card {
         background-color: white;
         padding: 5%;
-        box-shadow: 0 0 25px -10px black;
-        border-radius: 40px;
+        box-shadow: 0 0 15px -10px black;
+
+        border-radius: 15px;
     }
 
     .form-header {
