@@ -28,13 +28,12 @@
         background-color: white;
         border-radius: 20px;
 
-        box-shadow: 0 0 20px -10px black;
         transition: 0.3s;
 
         padding: 5%;
 
         &:hover {
-            box-shadow: 0 0 30px -10px black;
+            box-shadow: 0 0 15px -10px black;
             transition: 0.3s;
         }
     }
