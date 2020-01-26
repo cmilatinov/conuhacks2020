@@ -5,7 +5,7 @@
     <div class="section-header">Upcoming Events</div>
     <div class="event-list">
         <div class="event-container" v-for="event of events" :key="event.id">
-            <event-card class="event-card" :eventInfo="event">
+            <event-card @learnMore="learnMore" class="event-card" :eventInfo="event">
             </event-card>
         </div>
     </div>
@@ -18,8 +18,7 @@
     </div>
 
     <div class="hint-row">
-        <div class="hint"><strong>{{nbEvents}}</strong> recently posted events</div>
-        <div class="hint"><strong>{{nbUsers}}</strong> active users</div>
+        <div class="hint"><span class="hint-pad"><strong>{{nbEvents}}</strong> recently posted events</span> <strong>{{nbUsers}}</strong> active users</div>
     </div>
 
     <b-modal id="deleteConfirm"
@@ -217,10 +216,15 @@ export default {
     margin: 20px;
     font-size: 0.8em;
     opacity: 0.7;
+}
 
-    .hint {
+.hint {
+        position: fixed;
         margin-right: 20px;
-    }
+}
+
+.hint-pad{
+    padding-right: 20px;
 }
 </style>
 
